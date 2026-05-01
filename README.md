@@ -1,5 +1,11 @@
 # 🌦️ Weather MCP Server — Python + Clean Architecture + VIPER
 
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+![MCP](https://img.shields.io/badge/MCP-compatible-brightgreen)
+![Status](https://img.shields.io/badge/status-active-success)
+![Architecture](https://img.shields.io/badge/architecture-Clean%20%2B%20VIPER-blueviolet)
+![Async](https://img.shields.io/badge/async-httpx-orange)
+
 ## 🚀 Overview
 
 Este proyecto implementa un **servidor MCP (Model Context Protocol)** en Python que expone herramientas de clima consumiendo APIs externas en tiempo real.
@@ -47,6 +53,8 @@ weather-mcp/
 ├── weather.py
 ├── pyproject.toml
 ├── uv.lock
+├── Dockerfile
+├── docker-compose.yml
 ├── README.md
 └── .venv/
 ```
@@ -177,6 +185,28 @@ uv run main.py
 
 ---
 
+## 🐳 Docker
+
+### Build
+
+```bash
+docker build -t weather-mcp .
+```
+
+### Run con Docker
+
+```bash
+docker run --rm -it weather-mcp
+```
+
+### Run con Docker Compose
+
+```bash
+docker-compose run --rm weather-mcp
+```
+
+---
+
 ## 🔌 Configuración MCP (Claude Desktop)
 
 ```json
@@ -244,7 +274,7 @@ Este proyecto está preparado para:
 * [ ] Cache con Redis
 * [ ] Testing (pytest + mocks)
 * [ ] Logging estructurado
-* [ ] Dockerización
+* [x] Dockerización
 * [ ] Deployment
 
 ---
