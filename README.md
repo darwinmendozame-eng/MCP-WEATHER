@@ -50,13 +50,22 @@ Los modelos de lenguaje (LLMs) no tienen acceso directo a datos en tiempo real.
 weather-mcp/
 │
 ├── main.py
-├── weather.py
-├── pyproject.toml
-├── uv.lock
+├── core/
+│   └── server.py
+├── modules/
+│   └── weather/
+│       ├── entity.py
+│       ├── interactor.py
+│       ├── presenter.py
+│       ├── router.py
+│       └── service.py
+├── shared/
+│   └── http_client.py
 ├── Dockerfile
 ├── docker-compose.yml
-├── README.md
-└── .venv/
+├── pyproject.toml
+├── uv.lock
+└── README.md
 ```
 
 ---
@@ -121,7 +130,7 @@ sequenceDiagram
 
 ---
 
-## 📁 Estructura del proyecto a emigrar
+## 📁 Estructura del proyecto (Implementado)
 
 ✅ Clean Architecture + VIPER
 
@@ -209,6 +218,8 @@ docker-compose run --rm weather-mcp
 
 ## 🔌 Configuración MCP (Claude Desktop)
 
+### Con uv (desarrollo local)
+
 ```json
 {
   "mcpServers": {
@@ -219,6 +230,24 @@ docker-compose run --rm weather-mcp
         "/ruta/a/tu/proyecto",
         "run",
         "main.py"
+      ]
+    }
+  }
+}
+```
+
+### Con Docker
+
+```json
+{
+  "mcpServers": {
+    "weather": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "weather-mcp"
       ]
     }
   }
