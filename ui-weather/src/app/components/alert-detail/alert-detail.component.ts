@@ -46,34 +46,34 @@ import { ParsedAlert } from '../../services/alert-parser.service';
 
         <div class="info-grid">
           <div class="info-item">
-            <div class="label">🌡️ Detalles</div>
+            <div class="label">🌡️ Details</div>
             <div class="value">{{ alerts[0].what }}</div>
           </div>
 
           <div class="info-item">
-            <div class="label">📍 Ubicación</div>
+            <div class="label">📍 Location</div>
             <div class="value">{{ alerts[0].where }}</div>
           </div>
 
           <div class="info-item">
-            <div class="label">⏰ Horario</div>
+            <div class="label">⏰ Schedule</div>
             <div class="value">{{ alerts[0].when }}</div>
           </div>
 
           <div class="info-item" *ngIf="alerts[0].impacts">
-            <div class="label">⚠️ Impacto</div>
+            <div class="label">⚠️ Impact</div>
             <div class="value">{{ alerts[0].impacts | slice:0:120 }}{{ alerts[0].impacts.length > 120 ? '...' : '' }}</div>
           </div>
         </div>
 
         <!-- Timeline -->
         <div class="timeline">
-          <div class="timeline-title">📋 Detalles del Evento</div>
+          <div class="timeline-title">📋 Event Details</div>
 
           <div class="timeline-item" *ngIf="alerts[0].what">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <h4>¿Qué?</h4>
+              <h4>What?</h4>
               <p>{{ alerts[0].what }}</p>
             </div>
           </div>
@@ -81,7 +81,7 @@ import { ParsedAlert } from '../../services/alert-parser.service';
           <div class="timeline-item" *ngIf="alerts[0].where">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <h4>¿Dónde?</h4>
+              <h4>Where?</h4>
               <p>{{ alerts[0].where }}</p>
             </div>
           </div>
@@ -89,7 +89,7 @@ import { ParsedAlert } from '../../services/alert-parser.service';
           <div class="timeline-item" *ngIf="alerts[0].when">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <h4>¿Cuándo?</h4>
+              <h4>When?</h4>
               <p>{{ alerts[0].when }}</p>
             </div>
           </div>
@@ -97,7 +97,7 @@ import { ParsedAlert } from '../../services/alert-parser.service';
           <div class="timeline-item" *ngIf="alerts[0].impacts">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <h4>Impactos</h4>
+              <h4>Impacts</h4>
               <p>{{ alerts[0].impacts }}</p>
             </div>
           </div>
@@ -105,7 +105,7 @@ import { ParsedAlert } from '../../services/alert-parser.service';
           <div class="timeline-item" *ngIf="alerts[0].additionalDetails">
             <div class="timeline-dot additional"></div>
             <div class="timeline-content">
-              <h4>Detalles Adicionales</h4>
+              <h4>Additional Details</h4>
               <p>{{ alerts[0].additionalDetails }}</p>
             </div>
           </div>
@@ -113,7 +113,7 @@ import { ParsedAlert } from '../../services/alert-parser.service';
 
         <!-- Áreas Afectadas -->
         <div class="areas-section" *ngIf="alerts[0].areas && alerts[0].areas.length">
-          <div class="areas-title">🗺️ Áreas Afectadas</div>
+          <div class="areas-title">🗺️ Affected Areas</div>
           <div class="areas-tags">
             <span class="area-tag" *ngFor="let area of alerts[0].areas">{{ area }}</span>
           </div>
@@ -140,34 +140,34 @@ import { ParsedAlert } from '../../services/alert-parser.service';
 
         <div class="info-grid">
           <div class="info-item">
-            <div class="label">🌡️ Detalles</div>
+            <div class="label">🌡️ Details</div>
             <div class="value">{{ alerts[currentIndex].what }}</div>
           </div>
 
           <div class="info-item">
-            <div class="label">📍 Ubicación</div>
+            <div class="label">📍 Location</div>
             <div class="value">{{ alerts[currentIndex].where }}</div>
           </div>
 
           <div class="info-item">
-            <div class="label">⏰ Horario</div>
+            <div class="label">⏰ Schedule</div>
             <div class="value">{{ alerts[currentIndex].when }}</div>
           </div>
 
           <div class="info-item" *ngIf="alerts[currentIndex].impacts">
-            <div class="label">⚠️ Impacto</div>
+            <div class="label">⚠️ Impact</div>
             <div class="value">{{ alerts[currentIndex].impacts | slice:0:120 }}{{ alerts[currentIndex].impacts.length > 120 ? '...' : '' }}</div>
           </div>
         </div>
 
         <!-- Timeline -->
         <div class="timeline">
-          <div class="timeline-title">📋 Detalles del Evento</div>
+          <div class="timeline-title">📋 Event Details</div>
 
           <div class="timeline-item" *ngIf="alerts[currentIndex].what">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <h4>¿Qué?</h4>
+              <h4>What?</h4>
               <p>{{ alerts[currentIndex].what }}</p>
             </div>
           </div>
@@ -175,7 +175,7 @@ import { ParsedAlert } from '../../services/alert-parser.service';
           <div class="timeline-item" *ngIf="alerts[currentIndex].where">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <h4>¿Dónde?</h4>
+              <h4>Where?</h4>
               <p>{{ alerts[currentIndex].where }}</p>
             </div>
           </div>
@@ -183,7 +183,7 @@ import { ParsedAlert } from '../../services/alert-parser.service';
           <div class="timeline-item" *ngIf="alerts[currentIndex].when">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <h4>¿Cuándo?</h4>
+              <h4>When?</h4>
               <p>{{ alerts[currentIndex].when }}</p>
             </div>
           </div>
@@ -191,7 +191,7 @@ import { ParsedAlert } from '../../services/alert-parser.service';
           <div class="timeline-item" *ngIf="alerts[currentIndex].impacts">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <h4>Impactos</h4>
+              <h4>Impacts</h4>
               <p>{{ alerts[currentIndex].impacts }}</p>
             </div>
           </div>
@@ -199,7 +199,7 @@ import { ParsedAlert } from '../../services/alert-parser.service';
           <div class="timeline-item" *ngIf="alerts[currentIndex].additionalDetails">
             <div class="timeline-dot additional"></div>
             <div class="timeline-content">
-              <h4>Detalles Adicionales</h4>
+              <h4>Additional Details</h4>
               <p>{{ alerts[currentIndex].additionalDetails }}</p>
             </div>
           </div>
@@ -207,7 +207,7 @@ import { ParsedAlert } from '../../services/alert-parser.service';
 
         <!-- Áreas Afectadas -->
         <div class="areas-section" *ngIf="alerts[currentIndex].areas && alerts[currentIndex].areas.length">
-          <div class="areas-title">🗺️ Áreas Afectadas</div>
+          <div class="areas-title">🗺️ Affected Areas</div>
           <div class="areas-tags">
             <span class="area-tag" *ngFor="let area of alerts[currentIndex].areas">{{ area }}</span>
           </div>
