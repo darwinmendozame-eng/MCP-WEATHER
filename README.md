@@ -1,5 +1,11 @@
 # 🌦️ Weather MCP Server — Python + Clean Architecture + VIPER
 
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+![MCP](https://img.shields.io/badge/MCP-compatible-brightgreen)
+![Status](https://img.shields.io/badge/status-active-success)
+![Architecture](https://img.shields.io/badge/architecture-Clean%20%2B%20VIPER-blueviolet)
+![Async](https://img.shields.io/badge/async-httpx-orange)
+
 ## 🚀 Overview
 
 Este proyecto implementa un **servidor MCP (Model Context Protocol)** en Python que expone herramientas de clima consumiendo APIs externas en tiempo real.
@@ -44,11 +50,22 @@ Los modelos de lenguaje (LLMs) no tienen acceso directo a datos en tiempo real.
 weather-mcp/
 │
 ├── main.py
-├── weather.py
+├── core/
+│   └── server.py
+├── modules/
+│   └── weather/
+│       ├── entity.py
+│       ├── interactor.py
+│       ├── presenter.py
+│       ├── router.py
+│       └── service.py
+├── shared/
+│   └── http_client.py
+├── Dockerfile
+├── docker-compose.yml
 ├── pyproject.toml
 ├── uv.lock
-├── README.md
-└── .venv/
+└── README.md
 ```
 
 ---
@@ -113,7 +130,7 @@ sequenceDiagram
 
 ---
 
-## 📁 Estructura del proyecto a emigrar
+## 📁 Estructura del proyecto (Implementado)
 
 ✅ Clean Architecture + VIPER
 
@@ -177,7 +194,31 @@ uv run main.py
 
 ---
 
+## 🐳 Docker
+
+### Build
+
+```bash
+docker build -t weather-mcp .
+```
+
+### Run con Docker
+
+```bash
+docker run --rm -it weather-mcp
+```
+
+### Run con Docker Compose
+
+```bash
+docker-compose run --rm weather-mcp
+```
+
+---
+
 ## 🔌 Configuración MCP (Claude Desktop)
+
+### Con uv (desarrollo local)
 
 ```json
 {
@@ -189,6 +230,24 @@ uv run main.py
         "/ruta/a/tu/proyecto",
         "run",
         "main.py"
+      ]
+    }
+  }
+}
+```
+
+### Con Docker
+
+```json
+{
+  "mcpServers": {
+    "weather": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "weather-mcp"
       ]
     }
   }
@@ -244,7 +303,7 @@ Este proyecto está preparado para:
 * [ ] Cache con Redis
 * [ ] Testing (pytest + mocks)
 * [ ] Logging estructurado
-* [ ] Dockerización
+* [x] Dockerización
 * [ ] Deployment
 
 ---
