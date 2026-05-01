@@ -1,10 +1,19 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+# Ignore Python artifacts in weather-mcp
+weather-mcp/.venv/
+weather-mcp/__pycache__/
+weather-mcp/*.pyc
+weather-mcp/.git/
 
-# Virtual environments
-.venv
+# Ignore Angular artifacts in ui-weather
+ui-weather/node_modules/
+ui-weather/.angular/
+ui-weather/dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
