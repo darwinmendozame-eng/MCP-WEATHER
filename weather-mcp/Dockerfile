@@ -14,5 +14,8 @@ RUN uv sync --frozen --no-dev
 # Copy application code
 COPY . .
 
-# Default command
+# Expose port for HTTP transport
+EXPOSE 8000
+
+# Default command (stdio for Claude Desktop)
 CMD ["uv", "run", "main.py"]
