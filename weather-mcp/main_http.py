@@ -1,4 +1,5 @@
 import uvicorn
+from starlette.middleware.cors import CORSMiddleware
 from core.server import create_mcp_server
 from shared.http_client import HttpClient
 from modules.weather.service import WeatherService
@@ -17,6 +18,15 @@ def main():
     register_weather_tools(mcp, interactor, presenter)
 
     app = mcp.streamable_http_app()
+
+    # Add CORS middleware
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 
