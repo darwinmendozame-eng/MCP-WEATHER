@@ -25,6 +25,7 @@ def main():
         allow_origins=["*"],
         allow_methods=["*"],
         allow_headers=["*"],
+        expose_headers=["mcp-session-id"],
     )
 
     uvicorn.run(app, host="0.0.0.0", port=8000)
