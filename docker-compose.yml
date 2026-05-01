@@ -1,0 +1,6 @@
+services:
+  weather-mcp:
+    build: .
+    container_name: weather-mcp
+    stdin_open: true
+    tty: true
