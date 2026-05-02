@@ -16,7 +16,7 @@ import { ForecastComponent } from './components/forecast/forecast.component';
       </header>
       <main>
         <app-alerts></app-alerts>
-        <app-forecast></app-forecast>
+        <!-- <app-forecast></app-forecast> -->
       </main>
     </div>
   `,
