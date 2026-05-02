@@ -1,196 +1,163 @@
-# 🌦️ Weather MCP Server — Python + Clean Architecture + VIPER
+# 🌦️ Weather MCP Server
 
-![Python](https://img.shields.io/badge/python-3.10%2B-blue)
-![MCP](https://img.shields.io/badge/MCP-compatible-brightgreen)
-![Status](https://img.shields.io/badge/status-active-success)
-![Architecture](https://img.shields.io/badge/architecture-Clean%20%2B%20VIPER-blueviolet)
-![Async](https://img.shields.io/badge/async-httpx-orange)
+Monorepo containing the Weather MCP Server and UI frontend.
 
-## 🚀 Overview
+## 📁 Estructura del proyecto
 
-Este proyecto implementa un **servidor MCP (Model Context Protocol)** en Python que expone herramientas de clima consumiendo APIs externas en tiempo real.
-
-Está diseñado como **pieza de portafolio**, demostrando:
-
-* Integración de LLMs con herramientas externas (MCP)
-* Arquitectura escalable (Clean Architecture + VIPER)
-* Buenas prácticas (SOLID, async I/O, separación de responsabilidades)
-* Consumo de APIs reales (National Weather Service)
-
----
-
-## 🧠 ¿Qué problema resuelve?
-
-Los modelos de lenguaje (LLMs) no tienen acceso directo a datos en tiempo real.
-
-👉 Este servidor actúa como puente:
-
-* Expone herramientas (`tools`)
-* Conecta con APIs externas
-* Devuelve respuestas estructuradas listas para el modelo
-
----
-
-## 🧩 ¿Qué es MCP?
-
-**Model Context Protocol (MCP)** es un estándar que permite que un modelo (como Claude) invoque herramientas externas de forma controlada.
-
-📌 En este proyecto:
-
-* Claude → invoca tool (`get_forecast`)
-* MCP Server → ejecuta lógica
-* API externa → retorna datos
-* MCP → responde al modelo
-
----
-
-## 🏗️ Arquitectura Actual
-
-```text
-weather-mcp/
+```
+weather/
+├── weather-mcp/          # Backend (MCP Server)
+│   ├── main.py          # Entry point (stdio) - Claude Desktop
+│   ├── main_http.py     # Entry point (HTTP) - Angular UI
+│   ├── core/
+│   ├── modules/
+│   │   └── weather/
+│   │       ├── entity.py
+│   │       ├── service.py
+│   │       ├── interactor.py
+│   │       ├── presenter.py
+│   │       └── router.py
+│   ├── shared/
+│   │   └── http_client.py
+│   └── Dockerfile
 │
-├── main.py
-├── core/
-│   └── server.py
-├── modules/
-│   └── weather/
-│       ├── entity.py
-│       ├── interactor.py
-│       ├── presenter.py
-│       ├── router.py
-│       └── service.py
-├── shared/
-│   └── http_client.py
-├── Dockerfile
-├── docker-compose.yml
-├── pyproject.toml
-├── uv.lock
-└── README.md
+└── ui-weather/           # Frontend (Angular)
+    └── src/
+        └── app/
+            ├── components/
+            │   ├── alerts/
+            │   └── forecast/
+            ├── services/
+            │   ├── mcp.service.ts
+            │   └── translation.service.ts
+            └── models/
 ```
 
 ---
 
-## 🔷 Diagrama de Arquitectura
+## 🚀 Dos formas de uso
 
-```mermaid
-flowchart LR
-    Client[Claude / MCP Client]
-    MCP[MCP Server (FastMCP)]
-    Router[Router (Tools)]
-    Interactor[Interactor (Business Logic)]
-    Service[Service (API Calls)]
-    API[Weather API]
+### 1️⃣ Claude Desktop (stdio)
 
-    Client --> MCP
-    MCP --> Router
-    Router --> Interactor
-    Interactor --> Service
-    Service --> API
-    API --> Service
-    Service --> Interactor
-    Interactor --> Router
-    Router --> MCP
-    MCP --> Client
-```
-
----
-
-## 🔄 Flujo de ejecución
-
-```mermaid
-sequenceDiagram
-    participant C as Claude
-    participant MCP as MCP Server
-    participant R as Router
-    participant I as Interactor
-    participant S as Service
-    participant API as Weather API
-
-    C->>MCP: Request tool (get_forecast)
-    MCP->>R: Route tool
-    R->>I: Execute logic
-    I->>S: Fetch data
-    S->>API: HTTP request
-    API-->>S: JSON response
-    S-->>I: Data
-    I-->>R: Processed data
-    R-->>MCP: Formatted response
-    MCP-->>C: Final output
-```
-
----
-
-## ⚙️ Tecnologías
-
-* **Python 3.10+**
-* MCP Python SDK (`fastmcp`)
-* `httpx` (async HTTP client)
-* `uv` (environment & execution)
-* API: https://api.weather.gov
-
----
-
-## 📁 Estructura del proyecto (Implementado)
-
-✅ Clean Architecture + VIPER
+Usa `main.py` con transporte stdio para integrar con Claude Desktop.
 
 ```bash
-weather-mcp/
-│
-├── main.py
-├── core/
-│   └── server.py
-│
-├── modules/
-│   └── weather/
-│       ├── entity.py
-│       ├── interactor.py
-│       ├── presenter.py
-│       ├── router.py
-│       └── service.py
-│
-├── shared/
-│   └── http_client.py
-│
-├── pyproject.toml
-└── README.md
-```
-
----
-
-## 🚀 Instalación
-
-### 1. Clonar repo
-
-```bash
-git clone <repo-url>
 cd weather-mcp
-```
-
----
-
-### 2. Crear entorno
-
-```bash
-uv venv
-source .venv/bin/activate
-```
-
----
-
-### 3. Instalar dependencias
-
-```bash
 uv sync
-```
-
----
-
-## ▶️ Ejecución
-
-```bash
 uv run main.py
 ```
+
+**Configuración en Claude Desktop:**
+
+```json
+{
+  "mcpServers": {
+    "weather": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "weather-mcp"]
+    }
+  }
+}
+```
+
+### 2️⃣ Angular UI (HTTP)
+
+Usa `main_http.py` con transporte HTTP para servir la interfaz web.
+
+```bash
+cd weather-mcp
+uv run main_http.py
+# Servidor disponible en http://localhost:8000/mcp
+```
+
+Luego abre la UI en el navegador:
+
+```bash
+cd ui-weather
+npm install
+ng serve
+# UI disponible en http://localhost:4200
+```
+
+---
+
+## 🏗️ Arquitectura
+
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│  Claude Desktop │     │   Angular UI    │     │   MCP Server    │
+│    (stdio)      │     │   (HTTP :4200)  │     │  (HTTP :8000)   │
+└────────┬────────┘     └────────┬────────┘     └────────┬────────┘
+         │                       │                       │
+         │                       │  JSON-RPC             │
+         │                       │──────────────────────►
+         │                       │                       │
+         │                       │    SSE/JSON Response  │
+         │                       │◄──────────────────────│
+         │                       │                       │
+         │                       │              ┌───────▼───────┐
+         │                       │              │   NWS API      │
+         │                       │              │ api.weather.gov│
+         │                       │              └────────────────┘
+```
+
+**Flujo:**
+1. Claude Desktop o Angular hacen requests al MCP Server
+2. MCP Server procesa el request y llama a la API del National Weather Service
+3. La respuesta se formatea y retorna al cliente
+
+---
+
+## 🌡️ Herramientas disponibles
+
+### get_alerts
+
+Obtiene alertas meteorológicas activas para un estado de EE.UU.
+
+```python
+get_alerts(state="CA")
+```
+
+### get_forecast
+
+Obtiene el pronóstico del tiempo para una ubicación.
+
+```python
+get_forecast(latitude=37.7749, longitude=-122.4194)
+```
+
+---
+
+## 🗺️ Códigos de Estados de EE.UU.
+
+| Código | Estado          | Código | Estado              |
+|--------|-----------------|--------|---------------------|
+| AL     | Alabama         | MT     | Montana             |
+| AK     | Alaska          | NE     | Nebraska            |
+| AZ     | Arizona         | NV     | Nevada              |
+| AR     | Arkansas        | NH     | New Hampshire       |
+| CA     | California      | NJ     | New Jersey          |
+| CO     | Colorado        | NM     | New Mexico          |
+| CT     | Connecticut     | NY     | New York            |
+| DE     | Delaware        | NC     | North Carolina      |
+| FL     | Florida         | ND     | North Dakota        |
+| GA     | Georgia         | OH     | Ohio                |
+| HI     | Hawaii          | OK     | Oklahoma            |
+| ID     | Idaho           | OR     | Oregon              |
+| IL     | Illinois        | PA     | Pennsylvania        |
+| IN     | Indiana         | RI     | Rhode Island        |
+| IA     | Iowa            | SC     | South Carolina      |
+| KS     | Kansas          | SD     | South Dakota        |
+| KY     | Kentucky        | TN     | Tennessee           |
+| LA     | Louisiana       | TX     | Texas               |
+| ME     | Maine           | UT     | Utah                |
+| MD     | Maryland        | VT     | Vermont             |
+| MA     | Massachusetts    | VA     | Virginia            |
+| MI     | Michigan        | WA     | Washington          |
+| MN     | Minnesota       | WV     | West Virginia       |
+| MS     | Mississippi     | WI     | Wisconsin           |
+| MO     | Missouri        | WY     | Wyoming             |
+|        |                 | DC     | District of Columbia|
 
 ---
 
@@ -199,124 +166,67 @@ uv run main.py
 ### Build
 
 ```bash
-docker build -t weather-mcp .
+# Build backend (MCP Server)
+docker build -t weather-mcp ./weather-mcp
+
+# Build frontend (Angular UI)
+docker build -t ui-weather ./ui-weather
 ```
 
-### Run con Docker
+### Run
 
 ```bash
-docker run --rm -it weather-mcp
+# Run both services
+docker-compose up
 ```
 
-### Run con Docker Compose
+**Servicios:**
+- MCP Server HTTP: http://localhost:8000/mcp
+- Angular UI: http://localhost:4200
+
+### Run individual services
 
 ```bash
-docker-compose run --rm weather-mcp
+# Solo MCP Server (HTTP)
+docker run --rm -p 8000:8000 weather-mcp uv run main_http.py
+
+# Solo MCP Server (stdio para Claude)
+docker run --rm -it weather-mcp uv run main.py
 ```
 
 ---
 
-## 🔌 Configuración MCP (Claude Desktop)
+## 🌐 Traducción
 
-### Con uv (desarrollo local)
+La UI soporta traducción de resultados a múltiples idiomas:
+- English
+- Español
+- Français
+- Deutsch
+- Português
 
-```json
-{
-  "mcpServers": {
-    "weather": {
-      "command": "uv",
-      "args": [
-        "--directory",
-        "/ruta/a/tu/proyecto",
-        "run",
-        "main.py"
-      ]
-    }
-  }
-}
-```
-
-### Con Docker
-
-```json
-{
-  "mcpServers": {
-    "weather": {
-      "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "--rm",
-        "weather-mcp"
-      ]
-    }
-  }
-}
-```
+Usa MyMemory Translation API (gratuita).
 
 ---
 
-## 🧪 Ejemplo de herramientas disponibles
+## ⚙️ Tecnologías
 
-### 🔹 Obtener alertas
+**Backend:**
+- Python 3.11+
+- FastMCP (MCP Server)
+- httpx (HTTP async client)
+- uvicorn (ASGI server)
+- Clean Architecture + VIPER
 
-```text
-get_alerts(state="CA")
-```
+**Frontend:**
+- Angular 20+
+- TypeScript
+- RxJS
+- CSS (dark theme)
 
----
-
-### 🔹 Obtener pronóstico
-
-```text
-get_forecast(latitude=37.7749, longitude=-122.4194)
-```
-
----
-
-## 🧠 Principios aplicados
-
-### SOLID
-
-* **S** → cada capa tiene una responsabilidad clara
-* **O** → fácil extensión (nuevos módulos)
-* **L** → reemplazo sin romper lógica
-* **I** → interfaces simples
-* **D** → desacoplamiento entre capas
-
----
-
-## 📈 Escalabilidad
-
-Este proyecto está preparado para:
-
-* Integrar nuevas APIs (OpenWeather, etc.)
-* Agregar nuevos módulos (tráfico, finanzas, etc.)
-* Implementar caching
-* Añadir autenticación
-* Conectar con frontend (Angular / React)
-
----
-
-## 🧩 Roadmap
-
-* [ ] Cache con Redis
-* [ ] Testing (pytest + mocks)
-* [ ] Logging estructurado
-* [x] Dockerización
-* [ ] Deployment
-
----
-
-## 💼 Valor para portafolio
-
-Este proyecto demuestra:
-
-* Integración con LLMs (MCP)
-* Arquitectura profesional
-* Manejo de asincronía
-* Consumo de APIs reales
-* Pensamiento escalable
+**APIs:**
+- National Weather Service (api.weather.gov)
+- MyMemory Translation API
 
 ---
 

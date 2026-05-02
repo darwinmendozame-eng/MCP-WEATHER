@@ -1,6 +1,18 @@
 services:
   weather-mcp:
-    build: .
+    build: ./weather-mcp
     container_name: weather-mcp
+    ports:
+      - "8000:8000"
     stdin_open: true
     tty: true
+
+  ui-weather:
+    build: ./ui-weather
+    container_name: ui-weather
+    ports:
+      - "4200:4200"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - weather-mcp

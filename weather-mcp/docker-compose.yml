@@ -1,0 +1,8 @@
+services:
+  weather-mcp:
+    build: .
+    container_name: weather-mcp
+    ports:
+      - "8000:8000"
+    stdin_open: true
+    tty: true
