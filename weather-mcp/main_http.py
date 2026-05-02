@@ -19,7 +19,8 @@ def main():
     weather_presenter = WeatherPresenter()
     register_weather_tools(mcp, weather_interactor, weather_presenter)
 
-    geo_service = GeocodingService(http_client)
+    geo_http_client = HttpClient()  # No base_url for external APIs
+    geo_service = GeocodingService(geo_http_client)
     geo_interactor = GeocodingInteractor(geo_service)
     geo_presenter = GeocodingPresenter()
     register_geocoding_tools(mcp, geo_interactor, geo_presenter)
