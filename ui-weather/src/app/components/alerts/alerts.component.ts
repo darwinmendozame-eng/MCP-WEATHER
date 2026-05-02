@@ -109,13 +109,15 @@ import { AlertParserService, ParsedAlert } from '../../services/alert-parser.ser
       justify-content: space-between;
       gap: 12px;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .d-flex {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      width: 75%;
+      flex: 1;
+      min-width: 0;
     }
 
     .state-name {
@@ -137,7 +139,8 @@ import { AlertParserService, ParsedAlert } from '../../services/alert-parser.ser
       border: 1px solid #334155;
       background: #0f172a;
       color: #fff;
-      flex: 2;
+      flex: 1;
+      min-width: 60px;
       font-size: 1rem;
     }
 
@@ -153,8 +156,9 @@ import { AlertParserService, ParsedAlert } from '../../services/alert-parser.ser
       background: #0f172a;
       color: #fff;
       font-size: 1rem;
-      min-width: 200px;
+      min-width: 140px;
       cursor: pointer;
+      flex: 1;
     }
 
     select:focus {
@@ -171,6 +175,43 @@ import { AlertParserService, ParsedAlert } from '../../services/alert-parser.ser
       cursor: pointer;
       font-weight: 600;
       transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .form-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .d-flex {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      .d-flex label {
+        display: none;
+      }
+
+      select {
+        width: 100%;
+        min-width: unset;
+      }
+
+      input {
+        width: 100%;
+      }
+
+      button {
+        width: 100%;
+        margin-top: 8px;
+      }
+
+      .state-name {
+        display: none;
+      }
     }
 
     button:hover:not(:disabled) {
