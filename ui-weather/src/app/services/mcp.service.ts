@@ -97,8 +97,4 @@ export class McpService {
   getForecast(latitude: number, longitude: number): Observable<string> {
     return this.callTool('get_forecast', { latitude, longitude });
   }
-
-  searchLocations(query: string): Observable<string> {
-    return this.callTool('search_locations', { query });
-  }
 }
