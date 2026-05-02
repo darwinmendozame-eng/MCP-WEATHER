@@ -121,7 +121,7 @@ import { ParsedAlert } from '../../services/alert-parser.service';
 
         <!-- Instrucciones -->
         <div class="instructions" *ngIf="alerts[0].instructions">
-          <h3>🛡️ Instrucciones de Precaución</h3>
+          <h3>🛡️ Cautionary Instructions</h3>
           <p>{{ alerts[0].instructions }}</p>
         </div>
       </div>
@@ -215,7 +215,7 @@ import { ParsedAlert } from '../../services/alert-parser.service';
 
         <!-- Instrucciones -->
         <div class="instructions" *ngIf="alerts[currentIndex].instructions">
-          <h3>🛡️ Instrucciones de Precaución</h3>
+          <h3>🛡️ Cautionary Instructions</h3>
           <p>{{ alerts[currentIndex].instructions }}</p>
         </div>
       </div>
