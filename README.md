@@ -2,6 +2,16 @@
 
 Monorepo containing the Weather MCP Server and UI frontend.
 
+## 📸 Screenshots
+
+### Alertas Meteorológicas
+![Alerts](ui-weather/public/screenshot-alerts.png)
+
+### Sin Alertas
+![No Alerts](ui-weather/public/screenshot-no-alerts.png)
+
+---
+
 ## 📁 Estructura del proyecto
 
 ```
