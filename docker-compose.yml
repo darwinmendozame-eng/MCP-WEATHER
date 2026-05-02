@@ -6,6 +6,7 @@ services:
       - "8000:8000"
     stdin_open: true
     tty: true
+    command: ["uv", "run", "main_http.py"]
 
   ui-weather:
     build: ./ui-weather

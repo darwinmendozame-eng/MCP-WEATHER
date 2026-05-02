@@ -13,6 +13,8 @@ from modules.geocoding.router import register_geocoding_tools
 
 
 def main():
+    mcp = create_mcp_server("weather")
+
     http_client = HttpClient(base_url="https://api.weather.gov")
     weather_service = WeatherService(http_client)
     weather_interactor = WeatherInteractor(weather_service)
